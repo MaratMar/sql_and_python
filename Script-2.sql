@@ -5,23 +5,23 @@
 --
 select name, "class" from ships where launched > '1920'
 
--- Çàäàíèå 2: Âûâåñòè name, class ïî êîðàáëÿì, âûïóùåííûì ïîñëå 1920, íî íå ïîçäíåå 1942
+-- Задание 2: Вывести name, class по кораблям, выпущенным после 1920, но не позднее 1942
 --
 select name, class from ships where launched > '1920' and launched  < '1942'
 
--- Çàäàíèå 3: Êàêîå êîëè÷åñòâî êîðàáëåé â êàæäîì êëàññå. Âûâåñòè êîëè÷åñòâî è class
+-- Задание 3: Какое количество кораблей в каждом классе. Вывести количество и class
 --
 select count("class"), ships."class" from ships group by ships."class" 
 
--- Çàäàíèå 4: Äëÿ êëàññîâ êîðàáëåé, êàëèáð îðóäèé êîòîðûõ íå ìåíåå 16, óêàæèòå êëàññ è ñòðàíó. (òàáëèöà classes)
+-- Задание 4: Для классов кораблей, калибр орудий которых не менее 16, укажите класс и страну. (таблица classes)
 --
 select "class" , country from classes where  bore >= '16'
 
--- Çàäàíèå 5: Óêàæèòå êîðàáëè, ïîòîïëåííûå â ñðàæåíèÿõ â Ñåâåðíîé Àòëàíòèêå (òàáëèöà Outcomes, North Atlantic). Âûâîä: ship.
+-- Задание 5: Укажите корабли, потопленные в сражениях в Северной Атлантике (таблица Outcomes, North Atlantic). Вывод: ship.
 --
 select ship from outcomes where battle = 'North Atlantic' and result = 'sunk'
 
--- Çàäàíèå 6: Âûâåñòè íàçâàíèå (ship) ïîñëåäíåãî ïîòîïëåííîãî êîðàáëÿ
+-- Задание 6: Вывести название (ship) последнего потопленного корабля
 --
 select ship from battles 
 join outcomes
@@ -34,7 +34,7 @@ where "date" in (
 and result = 'sunk'
 
 
--- Çàäàíèå 7: Âûâåñòè íàçâàíèå êîðàáëÿ (ship) è êëàññ (class) ïîñëåäíåãî ïîòîïëåííîãî êîðàáëÿ
+-- Задание 7: Вывести название корабля (ship) и класс (class) последнего потопленного корабля
 --
 select "name", "class" 
 from ships
@@ -48,7 +48,7 @@ in  (select ship from battles
 and result = 'sunk')
 
 
--- Çàäàíèå 8: Âûâåñòè âñå ïîòîïëåííûå êîðàáëè, ó êîòîðûõ êàëèáð îðóäèé íå ìåíåå 16, è êîòîðûå ïîòîïëåíû. Âûâîä: ship, class
+-- Задание 8: Вывести все потопленные корабли, у которых калибр орудий не менее 16, и которые потоплены. Вывод: ship, class
 --
 select ships."name", ships."class" 
 from outcomes outcomes
@@ -58,25 +58,25 @@ from outcomes outcomes
 	on classes."class" = ships."class" 
 where outcomes."result" = 'sunk' and bore >'14'
 
---Ïðîâåðêà
+--Проверка
 select * from ships
 join outcomes
 on ships."name" = outcomes.ship 
 
--- Çàäàíèå 9: Âûâåñòè âñå êëàññû êîðàáëåé, âûïóùåííûå ÑØÀ (òàáëèöà classes, country = 'USA'). Âûâîä: class
+-- Задание 9: Вывести все классы кораблей, выпущенные США (таблица classes, country = 'USA'). Вывод: class
 --
 
 select classes."class"  from classes where country = 'USA'
 
 
--- Çàäàíèå 10: Âûâåñòè âñå êîðàáëè, âûïóùåííûå ÑØÀ (òàáëèöà classes & ships, country = 'USA'). Âûâîä: name, class
+-- Задание 10: Вывести все корабли, выпущенные США (таблица classes & ships, country = 'USA'). Вывод: name, class
 
 select ships."name", ships."class" from ships
 join classes
 on ships."class" = classes."class" 
 where classes.country = 'USA'
 
--- Çàäàíèå 20: Íàéäèòå ñðåäíèé ðàçìåð hd PC êàæäîãî èç òåõ ïðîèçâîäèòåëåé, êîòîðûå âûïóñêàþò è ïðèíòåðû. Âûâåñòè: maker, ñðåäíèé ðàçìåð HD.
+-- Задание 20: Найдите средний размер hd PC каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний размер HD.
 select avg(hd) from pc pc
 join product product 
 on product.model = pc.model
