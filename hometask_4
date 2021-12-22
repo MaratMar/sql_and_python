@@ -6,10 +6,17 @@
 
 --В процессе
 
+create view laptop_with_pages as
 select *,
-row_number(*) over(partition by code) as page,
-count(*) over(partition by code) as page
-from laptop
+case when rn % 2 = 0 then rn / 2 else rn / 2 + 1 end as page_num,
+case when rn % 2 = 0 then 2 else 1 end as position
+
+
+from (
+  select *, row_number(*) over (order by price desc) as rn
+  
+  from laptop
+) a
 
 sample:
 1 1
