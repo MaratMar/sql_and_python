@@ -11,6 +11,14 @@ ORDER BY Grades.Grade DESC, Students.Name ASC, Students.Marks ASC;
 --task2  (lesson9)
 -- oracle: https://www.hackerrank.com/challenges/occupations/problem
 
+select Doctor, Professor, Singer, Actor
+from (
+      select row_number() over (partition by occupation order by name) as rn, name, occupation
+      from occupations)
+pivot (max(name) for occupation in ('Doctor' as Doctor,'Professor' as Professor, 'Singer' as Singer, 'Actor' as Actor)) pvt;
+order by rn;
+
+
 --task3  (lesson9)
 -- oracle: https://www.hackerrank.com/challenges/weather-observation-station-9/problem
 SELECT DISTINCT CITY FROM STATION WHERE REGEXP_LIKE(CITY, '^[^AEIOU]');
